@@ -3,14 +3,7 @@ const readline = require('readline');
 const fs = require('fs');
 const chalk = require('chalk');
 const Confirm = require('prompt-confirm');
-const figmaGenerate = require('../src/lib/figma/plugin2/index');
-
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout
-// });
-
-// Do this as the first thing so that any code reading it knows the right env.
+const {run} = require('../src/lib/figma/plugin2/index');
 
 let mode = 'development';
 let project = '';
@@ -31,18 +24,14 @@ if(process.argv.indexOf('--project') !== -1){
    project = process.argv.slice(2)[0]
 }
 
-// process.env.BABEL_ENV = mode;
-// process.env.NODE_ENV = mode;
-
 //API_KEY_FIGMA
 const figmaApiKey = '36399-20eb3704-2c13-449f-8309-398d28cdf954';
 
 //ID_PROJECT
-const figmaProjectId = 'b4LkTyJVzqRNTmY9m4uC9g';
+const figmaFilesId = 'b4LkTyJVzqRNTmY9m4uC9g';
 
 //ID_PROJECT
 // const figmaProjectId = 'InZsgUaqMorH2q5iapfUDK';
-// const NODE_ENV = mode || 'development';
 
 try {
   if(project){ //###### ОБНОВЛЕНИЯ ФАЙЛА ФИГМЫ ДЛЯ ОПРЕДЕЛЕННОГО ПРОЕКТА - ПОКА НЕ РЕАЛИЗОВАННО
@@ -71,7 +60,7 @@ try {
   }else{ //###### ОБНОВЛЕНИЯ ФАЙЛА ФИГМЫ ДЛЯ ВСЕХ ПРОЕКТОВ
         confirm(`Are you sure you want to rebuild figma in all projects in ${mode} mode?`).then(answer => {
           if(answer && answer === true) {
-            figmaGenerate.getFigmaFiles(figmaProjectId, figmaApiKey, mode);
+            run({figmaFilesId, figmaApiKey, mode});
           } else {
             console.log(chalk.cyan('Operation canceled!'));
             return false;

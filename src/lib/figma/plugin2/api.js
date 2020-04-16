@@ -11,10 +11,11 @@ const fetch = require('node-fetch');
 
 module.exports = {
   getHeaders,
-  getFigmaFiles,
-  getFigmaFileNodes,
-  getFigmaFileImages,
-  getFigmaFileImagesFills
+  getFiles,
+  getFileNodes,
+  getFileImages,
+  getFileImagesFills,
+  getFileVersion
 };
 
 const baseUrl = 'https://api.figma.com';
@@ -26,8 +27,8 @@ function getHeaders(devToken) {
 }
 
 //GET FILES
-async function getFigmaFiles(options) {
-  const {figmaKey, headers, ids, depth, geometry, version, plugin_data} = options;
+async function getFiles(options) {
+  const {figmaFilesId , headers, ids, depth, geometry, version, plugin_data} = options;
   const urlParams = [];
   if(version) urlParams.push(`&version=${version}`);
   if(ids) urlParams.push(`&ids=${ids}`);
@@ -42,28 +43,28 @@ async function getFigmaFiles(options) {
     params = params.replace(/\/&/g,'/');
   }
 
-  // console.log(`${baseUrl}/v1/files/${figmaKey}${params}`);
-  const data = await httpRequest(`${baseUrl}/v1/files/${figmaKey}${urlParams.join('')}`, headers); 
+  // console.log(`${baseUrl}/v1/files/${figmaFilesId }${params}`);
+  const data = await httpRequest(`${baseUrl}/v1/files/${figmaFilesId }${urlParams.join('')}`, headers); 
   return data;
 }
 
 //GET FILE NODES
-async function getFigmaFileNodes(options) {
-  const {figmaKey, headers, ids, depth, geometry, version, plugin_data} = options;
+async function getFileNodes(options) {
+  const {figmaFilesId , headers, ids, depth, geometry, version, plugin_data} = options;
   const urlParams = [];
   if(depth) urlParams.push(`&depth=${depth}`);
   if(geometry) urlParams.push(`&geometry=${geometry}`);
   if(version) urlParams.push(`&version=${version}`);
   if(plugin_data) urlParams.push(`&plugin_data=${plugin_data}`);
-  // console.log('URL', `${baseUrl}/v1/files/${figmaKey}/nodes?ids=${ids}${urlParams.join('')}`)
-  const data = await httpRequest(`${baseUrl}/v1/files/${figmaKey}/nodes?ids=${ids}${urlParams.join('')}`, headers); 
+  // console.log('URL', `${baseUrl}/v1/files/${figmaFilesId }/nodes?ids=${ids}${urlParams.join('')}`)
+  const data = await httpRequest(`${baseUrl}/v1/files/${figmaFilesId }/nodes?ids=${ids}${urlParams.join('')}`, headers); 
   return data;
 }
 
 //GET FILE IMAGES
-async function getFigmaFileImages(options) {
+async function getFileImages(options) {
 
-  const {figmaKey, headers, ids, scale, format, svg_include_id, svg_simplify_stroke, use_absolute_bounds, version} = options;
+  const {figmaFilesId , headers, ids, scale, format, svg_include_id, svg_simplify_stroke, use_absolute_bounds, version} = options;
   const urlParams = [];
   if(scale) urlParams.push(`&scale=${scale}`);
   if(format) urlParams.push(`&format=${format}`);
@@ -71,17 +72,22 @@ async function getFigmaFileImages(options) {
   if(svg_simplify_stroke) urlParams.push(`&svg_simplify_stroke=${svg_simplify_stroke}`);
   if(use_absolute_bounds) urlParams.push(`&use_absolute_bounds=${use_absolute_bounds}`);
   if(version) urlParams.push(`&version=${version}`);
-  // console.log('URL', `${baseUrl}/v1/images/${figmaKey}?ids=${ids}${urlParams.join('')}`)
-  const data = await httpRequest(`${baseUrl}/v1/files/${figmaKey}/nodes?ids=${ids}${urlParams.join('')}`, headers); 
+  //'https://api.figma.com/v1/images/file_key?ids=ids
+  const data = await httpRequest(`${baseUrl}/v1/images/${figmaFilesId}?ids=${ids}${urlParams.join('')}`, headers); 
   return data;
 }
 
 //GET FILE IMAGES FILLS
-async function getFigmaFileImagesFills(options) {
-  const {figmaKey, headers} = options;
+async function getFileImagesFills(options) {
+  const {figmaFilesId , headers} = options;
+  const data = await httpRequest(`${baseUrl}/v1/files/${figmaFilesId }/images`, headers); 
+  return data;
+}
 
-  // console.log('URL', `${baseUrl}/v1/images/${figmaKey}?ids=${ids}${urlParams.join('')}`)
-  const data = await httpRequest(`${baseUrl}/v1/files/${figmaKey}/images`, headers); 
+//GET FILE VERSION
+async function getFileVersion(options) {
+  const {figmaFilesId , headers} = options;
+  const data = await httpRequest(`${baseUrl}/v1/files/${figmaFilesId }/versions`, headers); 
   return data;
 }
 
