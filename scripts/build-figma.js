@@ -4,6 +4,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const Confirm = require('prompt-confirm');
 const {run} = require('../src/lib/figma/plugin2/index');
+const {runFigmaReact} = require('../src/lib/figma/plugin/index');
 
 let mode = 'development';
 let project = '';
@@ -61,6 +62,7 @@ try {
         confirm(`Are you sure you want to rebuild figma in all projects in ${mode} mode?`).then(answer => {
           if(answer && answer === true) {
             run({figmaFilesId, figmaApiKey, mode});
+            // runFigmaReact({figmaFilesId, figmaApiKey});
           } else {
             console.log(chalk.cyan('Operation canceled!'));
             return false;

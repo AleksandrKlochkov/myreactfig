@@ -72,6 +72,7 @@ async function getFigmaRefImages({ fileKey, headers }) {
 }
 
 async function getFigmaListImages({ fileKey, headers, options }, guids, format = 'svg', absolute = false, scale = null) {
+
   if (guids.length > 0) {
     const { imageScale } = options;
     scale = scale || imageScale;
@@ -93,10 +94,9 @@ async function getFigmaVectorListImages(shared, format = 'svg', absolute = false
 
 async function getFigmaVectors(shared) {
   const { headers } = shared;
-
   const vectors = await getFigmaVectorListImages(shared, 'svg', true);
+ 
   const vectorsRelative = await getFigmaVectorListImages(shared, 'svg', false);
-
   let promises = [];
   const guids = [];
 
@@ -125,7 +125,7 @@ async function httpRequest(url, headers = {}, method = 'GET', body = null){
     if (body) {
        headers['Accept'] = 'application/json'
     }
-    console.log(url)
+
     const response = await fetch(url, {method, body, headers})
 
     const data = await response.json()

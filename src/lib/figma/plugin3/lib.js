@@ -2,7 +2,6 @@ const fs = require('fs');
 const fsPath = require('path');
 const prettier = require('prettier');
 const fetch = require('node-fetch');
-const chalk = require('chalk');
 
 const VECTOR_TYPES = ['VECTOR', 'LINE', 'REGULAR_POLYGON', 'ELLIPSE', 'STAR'];
 const GROUP_TYPES = ['GROUP', 'BOOLEAN_OPERATION'];
@@ -203,8 +202,7 @@ function camelToSnake(str) {
 }
 
 function getFileName(str) {
-  const name = camelToSnake(str.replace(/\W+/g, ''));
-  return name;
+  return camelToSnake(str.replace(/\W+/g, ''));
 }
 
 function convertStyles(styles) {
@@ -484,6 +482,17 @@ async function visitNode(shared, node, prev = null, parent = null, notFirst = fa
 
   await renderChildren(state, shared);
 
+  // WTF?!?!
+  // if (node.name.charAt(0) === '$') {
+  //   const varName = node.name.substring(1);
+  //   print(`{this.props.${varName} && this.props.${varName}.split('\\n').map((line, idx) => <div key={idx}>{line}</div>)}`);
+  //   print(`{!this.props.${varName} && (<div>`);
+  //   for (const piece of content) {
+  //     print(piece);
+  //   }
+  //   print(`</div>)}`);
+  // }
+
   for (const piece of content) {
     print(piece);
   }
@@ -509,29 +518,50 @@ function paintsRequireRender(paints) {
 }
 
 function preprocessTree(node, shared) {
+
   const { vectorMap, imageMap, options } = shared;
+
 
   const props = getElementParams(node.name, options);
 
   let vectorsOnly = node.type !== 'FRAME';
+  // let vectorVConstraint = null;
+  // let vectorHConstraint = null;
 
+  // if (
+  //   paintsRequireRender(node.fills) ||
+  //   paintsRequireRender(node.strokes) ||
+  //   (node.blendMode != null && !['PASS_THROUGH', 'NORMAL'].includes(node.blendMode)))
+  // ) {
+  //   node.type = 'VECTOR';
+  // }
 
   const children = node.children && node.children.filter(child => child.visible !== false);
-
+  
   if (children) {
     for (let j = 0; j < children.length; j++) {
       if (!VECTOR_TYPES.includes(children[j].type)) {
         vectorsOnly = false;
       } else {
-
+        // if (vectorVConstraint != null && children[j].constraints.vertical != vectorVConstraint) {
+        //   vectorsOnly = false;
+        // }
+        // if (vectorHConstraint != null && children[j].constraints.horizontal != vectorHConstraint) {
+        //   vectorsOnly = false;
+        // }
+        // vectorVConstraint = children[j].constraints.vertical;
+        // vectorHConstraint = children[j].constraints.horizontal;
       }
     }
   }
-
   node.children = children;
 
   if ((children && children.length > 0 && vectorsOnly) || Object.keys(props).includes('vector')) {
     node.type = 'VECTOR';
+    // node.constraints = {
+    //   vertical: vectorVConstraint,
+    //   horizontal: vectorHConstraint
+    // };
   }
 
   if (VECTOR_TYPES.includes(node.type)) {
@@ -554,10 +584,7 @@ function preprocessTree(node, shared) {
 function preprocessCanvasComponents(canvas, shared) {
   for (let i = 0; i < canvas.children.length; i++) {
     const child = canvas.children[i];
-    if (child.name.charAt(0) === '#' && child.visible !== false) {
-      const child = canvas.children[i];
-      preprocessTree(child, shared);
-    }
+    console.log(child.type);
     if (child.type === 'FRAME' && child.visible !== false) {
       const child = canvas.children[i];
       preprocessTree(child, shared);
@@ -599,18 +626,10 @@ function getDescriptionStyles({ componentDescriptionMap, options }, node) {
   return description.substring(description.indexOf(delimiter) + delimiter.length).replace(/\\n/g, `\n`);
 }
 
-function firstLatterToUpper(fileName) {
-  console.log('FNAME',fileName);
-  if(fileName) {
-    fileName = fileName.toLowerCase().split('_').map(i=>i[0].toUpperCase() + i.slice(1)).join('').replace(/ /g, '');
-  }
-  return fileName;
-}
-
 async function createComponent(component, parentShared) {
   const { componentMap, options } = parentShared;
   const name = getComponentName(component.name, options);
-  const fileName = firstLatterToUpper(name);//getFileName(name)
+  const fileName = getFileName(name);
   const instance = getComponentInstance(component, options);
 
   const classPrefix = options.classPrefix || 'figma-';
@@ -648,9 +667,7 @@ async function createComponent(component, parentShared) {
     return null;
   };
 
-
-
-  const path = `src/figma-components/${fileName}.jsx`;
+  const path = `src/design-system/${fileName}.tsx`;
 
   const shared = {
     ...parentShared,
@@ -684,7 +701,7 @@ async function createComponent(component, parentShared) {
   const decorator = options.decorator || 'observer';
   const typeFactory = options.typeFactory || typeFactoryDefault;
   preprint(
-    `export const ${instance} = ${decorator}(props => { ${
+    `export const ${instance}: React.FC<${typeFactory(shared)}> = ${decorator}(props => { ${
       Object.keys(props).length ? `const { ${Object.keys(props).join(', ')} } = props;` : ''
     }`
   ); // Can be replaced with React.memo(...)
@@ -702,10 +719,8 @@ async function createComponent(component, parentShared) {
   }
 
   // Stage 3 (Collect all styles)
-  //STYLES
-  //print(`<style jsx>{\`${styles}\n\`}</style>`);
 
-  await createStyleScss(fileName, styles)
+  print(`<style jsx>{\`${styles}\n\`}</style>`);
 
   // Stage 4 (Finish the component)
 
@@ -717,21 +732,10 @@ async function createComponent(component, parentShared) {
   componentMap[name] = { instance, name, doc, fileName, localComponentMap };
 }
 
-async function createStyleScss(fileName, styles){
-  const path = `src/figma-components/${fileName}.scss`;
-
-  fs.writeFile(fsPath.resolve(`${path}`), styles,  function(e) { 
-  if (e) { //если возникла ошибка записи
-    console.error(chalk.red(`\nError failed to overwri  te file ${path}`), e.message);
-  } 
-    console.log(chalk.green(`\nData from figma received successfully and written to file "${path}"!`));
-  });
-}
-
 async function createComponents(canvas, shared) {
   for (let i = 0; i < canvas.children.length; i++) {
     const child = canvas.children[i];
-    if (child.visible !== false) {
+    if (child.name.charAt(0) === '#' && child.visible !== false) {
       const child = canvas.children[i];
       await createComponent(child, shared);
     }
@@ -761,15 +765,13 @@ async function generateComponentFile({ path, instance, fileName, name }, options
 }
 
 async function generateComponent(component, options) {
-  const path = fsPath.resolve(options.dir, `${component.fileName}${options.fileAfterFix}.jsx`);
-  
+  const path = fsPath.resolve(options.dir, `${component.fileName}${options.fileAfterFix}.tsx`);
 
   // Content represents writing cursor
   let contents = '';
 
   // Header
   contents += `import * as React from 'react';\n`;
-  contents += `import './${component.fileName}.scss';\n`;
 
   const imports = options.imports || [`import { observer } from 'mobx-react';`];
   imports.forEach(imp => {
@@ -809,7 +811,7 @@ async function saveSvgToDisk(fileName, content, { options }) {
 
   fs.writeFileSync(fsPath.resolve(options.imageDir, fileName), content);
 
-  return `'${options.imageUrlPrefix}/${fileName}'`;
+  return `${options.imageUrlPrefix}${fileName}`;
 }
 
 async function loadImageToDisk(url, fileName, { options, headers }) {
@@ -831,7 +833,7 @@ async function loadImageToDisk(url, fileName, { options, headers }) {
 
   await saveFileFromFetch(imageRequest, fsPath.resolve(options.imageDir, fileName));
 
-  return `'${options.imageUrlPrefix}/${fileName}'`;
+  return `${options.imageUrlPrefix}${fileName}`;
 }
 
 async function loadImageFromImagesToDisk(node, shared) {

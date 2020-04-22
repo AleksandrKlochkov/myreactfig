@@ -4,7 +4,7 @@ const { typeFactoryDefault } = require('./lib');
 
 module.exports = {
   default: {
-    dir: './src/figma-components/',
+    dir: './src/design-system',
     makeDir: true,
     stylePlugins: stylePlugins,
     contentPlugins: contentPlugins,
@@ -28,12 +28,12 @@ module.exports = {
       trailingComma: 'none'
     },
     imageFormat: 'png',
-    imageDir: './src/figma-components/static/images',
-    imageUrlPrefix: './static/images/',
+    imageDir: './static/images',
+    imageUrlPrefix: '/images/',
     imageScale: 2
   },
   mobx: {
-    dir: './src/figma-components/',
+    dir: './src/design-system',
     makeDir: true,
     stylePlugins: stylePlugins,
     contentPlugins: contentPlugins,
@@ -57,8 +57,8 @@ module.exports = {
       trailingComma: 'none'
     },
     imageFormat: 'png',
-    imageDir: './src/figma-components/static/images',
-    imageUrlPrefix: './static/images',
+    imageDir: './static/images',
+    imageUrlPrefix: '/images/',
     imageScale: 2
   }
 };

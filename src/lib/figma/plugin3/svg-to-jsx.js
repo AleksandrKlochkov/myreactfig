@@ -1,6 +1,6 @@
 let q = require('q');
 let assign = require('object-assign');
-const parseString = require('xml2js').parseString;
+let parseString = require('xml2js').parseString;
 let xmlbuilder = require('xmlbuilder');
 let utils = require('./utils.js');
 
@@ -21,7 +21,6 @@ function cleanupParsedSVGElement(xpath, previousSibling, element) {
 }
 
 function parseSVG(svg, callback) {
-  console.log(svg)
   parseString(
     svg,
     {

@@ -34,7 +34,6 @@ async function setComponentFromCache(state, shared) {
     localComponentMap[name] = componentMap[name];
 
     const currentClass = genClassName();
-    console.log('current_class')
     classNames.push(currentClass);
     additionalStyles.push(`
       .${currentClass} > :global(*) {
