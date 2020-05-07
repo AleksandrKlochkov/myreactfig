@@ -1,4 +1,4 @@
-class ComponentCore {
+class ElementCore {
     constructor() {
         this.init();
     }
@@ -8,4 +8,4 @@ class ComponentCore {
   
 }
 
-module.exports = ComponentCore
+module.exports = ElementCore

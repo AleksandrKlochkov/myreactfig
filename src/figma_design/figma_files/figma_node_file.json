@@ -1,8 +1,8 @@
 {
 	"name": "ZENIT DESIGN SYSTEM",
-	"lastModified": "2020-04-22T08:27:11.235094Z",
-	"thumbnailUrl": "https://s3-alpha-sig.figma.com/thumbnails/a3164154-9f3a-4324-a8a0-ba3b800ae238?Expires=1588550400&Signature=ZbEKavJwDd6fm1Hg3aN4I-j7uw9wxQG2K3mJdXhbVlYt1UqbyIjAp~wP2wBMDjFtPTw2vcQiPKG9l0cncEFbBUKHKzalLTxnWcxBPJbHnFVleIe7O1y5n02QVD9S96tJBO4O7s~V5qjfvxI2bLmzH3oPeME6qumofizTURFR5NYF-vM~t5KqlOYlQsB2YVmYGOQLtEe0mVgxu1OaMmZp0XjMgJQeDO9X-ObtJjLBlr9SiFwFe6yUNT86uBuMJ0Hb8x9TcIcd7BB7YLazhZvScAJmDkMndb7RE-9S3ueU-rW5a737IErdxu1IwUxlhbNAfCT294JH2i2JA4ng6c1v7w__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
-	"version": "304648397",
+	"lastModified": "2020-05-06T10:50:23.078049Z",
+	"thumbnailUrl": "https://s3-alpha-sig.figma.com/thumbnails/5b9bb425-f44b-4606-9958-64d5a3a7fc36?Expires=1589760000&Signature=RGw82iQQx-f6RWwzzmBn0-bwEGD70urGEiXAKgg7MugF-9~zwUXyh-xPei53sn6LsFYcUDYtSGyMMrXdvgeJFwXVossu4FfRWEnsarAL8EMSyi~6HyM6Bm84BwpXLEElswG3LIFNQkvdxsWEth9KlSnfG01qbfhvYWKBzXmjdx~CZ48sD4ItGhqrJrIHiDJkBOde3YygquyKNTQbwn9Xl4PWEkdLh8LoHdxcrakcLmtgOqtPyDE8-UpIdxikSxPQwVqqoZDJIq5AqSilj2CKlROTsLmzOgV0m6kmPcu~HfDuOYw1lC96gQApLfyr6lEXomSyX6CPJT-b94Mg-MAzlw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+	"version": "317692701",
 	"role": "editor",
 	"nodes": {
 		"91:122": {
@@ -716,6 +716,213 @@
 									"r": 0.36666667461395264,
 									"g": 0.23222222924232483,
 									"b": 0.23222222924232483,
+									"a": 1
+								}
+							}
+						],
+						"strokes": [],
+						"strokeWeight": 1,
+						"strokeAlign": "INSIDE",
+						"effects": []
+					},
+					{
+						"id": "250:31",
+						"name": "Ellipse",
+						"type": "ELLIPSE",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 557,
+							"y": 548,
+							"width": 139,
+							"height": 139
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0.8588235378265381,
+									"g": 0.062745101749897,
+									"b": 0.062745101749897,
+									"a": 1
+								}
+							}
+						],
+						"strokes": [],
+						"strokeWeight": 1,
+						"strokeAlign": "INSIDE",
+						"effects": []
+					},
+					{
+						"id": "251:0",
+						"name": "Line 1",
+						"type": "LINE",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 302,
+							"y": 587,
+							"width": 28,
+							"height": 120
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [],
+						"strokes": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0,
+									"g": 0,
+									"b": 0,
+									"a": 1
+								}
+							}
+						],
+						"strokeWeight": 1,
+						"strokeAlign": "CENTER",
+						"effects": []
+					},
+					{
+						"id": "251:1",
+						"name": "Star 1",
+						"type": "STAR",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 553,
+							"y": 194,
+							"width": 122,
+							"height": 117
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0.7686274647712708,
+									"g": 0.7686274647712708,
+									"b": 0.7686274647712708,
+									"a": 1
+								}
+							}
+						],
+						"strokes": [],
+						"strokeWeight": 1,
+						"strokeAlign": "INSIDE",
+						"effects": []
+					},
+					{
+						"id": "251:3",
+						"name": "Arrow 1",
+						"type": "VECTOR",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 511,
+							"y": 502,
+							"width": 261,
+							"height": 80
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [],
+						"strokes": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0,
+									"g": 0,
+									"b": 0,
+									"a": 1
+								}
+							}
+						],
+						"strokeWeight": 1,
+						"strokeAlign": "INSIDE",
+						"effects": []
+					},
+					{
+						"id": "251:4",
+						"name": "Line 2",
+						"type": "LINE",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 279,
+							"y": 665,
+							"width": 74,
+							"height": 12.000000953674316
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [],
+						"strokes": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0,
+									"g": 0,
+									"b": 0,
+									"a": 1
+								}
+							}
+						],
+						"strokeWeight": 1,
+						"strokeAlign": "CENTER",
+						"effects": []
+					},
+					{
+						"id": "251:5",
+						"name": "Slice 1",
+						"type": "SLICE",
+						"absoluteBoundingBox": {
+							"x": 266,
+							"y": 200,
+							"width": 92,
+							"height": 115
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						}
+					},
+					{
+						"id": "253:0",
+						"name": "Ellipse??:hover",
+						"type": "ELLIPSE",
+						"blendMode": "PASS_THROUGH",
+						"absoluteBoundingBox": {
+							"x": 455,
+							"y": 321,
+							"width": 102,
+							"height": 96
+						},
+						"constraints": {
+							"vertical": "TOP",
+							"horizontal": "LEFT"
+						},
+						"fills": [
+							{
+								"blendMode": "NORMAL",
+								"type": "SOLID",
+								"color": {
+									"r": 0,
+									"g": 0,
+									"b": 0,
 									"a": 1
 								}
 							}

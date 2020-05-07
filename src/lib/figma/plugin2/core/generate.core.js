@@ -1,11 +1,11 @@
 const {VECTOR_TYPES} = require('../config/init')
-const ShapeComponent = require('../components/shape.component');
+const ShapeElement = require('../elements/shape.element');
 
 class GenerateCore {
-    shapeComponent = null
+    shapeElement = null
 
     constructor() {
-        this.shapeComponent = new ShapeComponent();
+         this.shapeElement = new ShapeElement();
     }
     
     init(node, shared, prevNode=null) {
@@ -13,13 +13,13 @@ class GenerateCore {
            this.treeElements(node,shared, prevNode);
         }
 
-        const components = shared.components;
+        let figures = shared.components;
         const vectors = shared.vectors;
         const images = shared.images; 
-        if(components){
-            const shape = components.filter(c=> !VECTOR_TYPES.includes(c.type));
-            if(shape) {
-                this.shapeComponent.init(shape, shared);
+        if(figures){
+            figures = figures.filter(f=> !VECTOR_TYPES.includes(f.type));
+            if(figures && figures.length !== 0) {
+                this.shapeElement.init(figures[figures.length-2], shared);
             }
         }
     }
@@ -42,7 +42,7 @@ class GenerateCore {
 
         shared.components.push(node);
 
-        if(node && node.children){
+        if(node && node.children) {
            const nodes = node.children;
            nodes.forEach(item => {
             this.treeElements(item, shared, node);

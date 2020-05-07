@@ -2,7 +2,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
 const ApiService = require('./api.service')
-const {FILES_PATH,BASE_URL} = require('../config/init.js')
+const {BASE_URL} = require('../config/init.js')
 
 class FileService {
     apiFigma = null;
